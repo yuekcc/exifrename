@@ -30,7 +30,7 @@ see [MIT-LICENSE.txt](MIT-LICENSE.txt)
 
 exifrename 的源代码最初写于 2013 年。是我能找到的，自己最早的代码，毕竟当时并没有使用 git 管理代码。这个版本之后，就改用 golang 实现了一个相同功能的工具：[picar](https://github.com/yuekcc/picar)。后续也正式使用 git 管理自己的代码了。
 
-```
+```sh
 total 48K
 drwxr-xr-x 1 feng 197121    0 May  2  2013 ./
 drwxr-xr-x 1 feng 197121    0 May  2  2013 ../
