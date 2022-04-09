@@ -28,7 +28,7 @@ see [MIT-LICENSE.txt](MIT-LICENSE.txt)
 2022 年 03 月 11 日 补充
 -------
 
-exifrename 的源代码最初写于 2013 年。是我能找到的，自己最早的代码，毕竟当时并没有使用 git 管理代码。这个版本之后，就改用 golang 实现了一个相同功能的工具：[picar](https://github.com/yuekcc/picar)。后续也正式使用 git 管理自己的代码了。
+exifrename 的源代码最初写于 2013 年。也是我能找到的自己最早的代码存档。exifrename 后续改用 [golang 实现](https://github.com/yuekcc/picar)。
 
 ```sh
 total 48K
