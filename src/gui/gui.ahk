@@ -1,34 +1,34 @@
 ; a simple gui for exifrename.py
 ; this script was tested on WINXP
 
-; Æô¶¯×Ô¶¨ÒåÇ°×º±ê¼Ç
+; å¯åŠ¨è‡ªå®šä¹‰å‰ç¼€æ ‡è®°
 Enable_Prefix := false
 
 ; GUI CONTROL SETTINGS
-; ´´½¨GUI¿Ø¼ş
-Gui, Add, Text, x16 y17 w90 h20 , Ñ¡ÔñÄ¿Â¼£º
-Gui, Add, Button, x296 y47 w100 h30 gSelectFloder, ä¯ÀÀ
+; åˆ›å»ºGUIæ§ä»¶
+Gui, Add, Text, x16 y17 w90 h20 , é€‰æ‹©ç›®å½•ï¼š
+Gui, Add, Button, x296 y47 w100 h30 gSelectFloder, æµè§ˆ
 Gui, Add, Edit, x16 y47 w270 h30 vCtrlEdit_PicFloder
-Gui, Add, GroupBox, x16 y87 w380 h80 +Left, ÉèÖÃ
-Gui, Add, CheckBox, x26 y117 w100 h30 gSettingPrefix, ×Ô¶¨ÒåÇ°×º
+Gui, Add, GroupBox, x16 y87 w380 h80 +Left, è®¾ç½®
+Gui, Add, CheckBox, x26 y117 w100 h30 gSettingPrefix, è‡ªå®šä¹‰å‰ç¼€
 Gui, Add, Edit, x136 y117 w250 h30 vCtrlEdit_Prefix
-Gui, Add, Button, x296 y177 w100 h30 gGuiClose, ÍË³ö
-Gui, Add, Button, x186 y177 w100 h30 gDoRename, ¿ªÊ¼
+Gui, Add, Button, x296 y177 w100 h30 gGuiClose, é€€å‡º
+Gui, Add, Button, x186 y177 w100 h30 gDoRename, å¼€å§‹
 
-; ÉèÖÃ¿Ø¼ş³õÊ¼×´Ì¬
+; è®¾ç½®æ§ä»¶åˆå§‹çŠ¶æ€
 GuiControl, Disable, CtrlEdit_Prefix
 
-; ÏÔÊ¾Ö÷´°¿Ú
+; æ˜¾ç¤ºä¸»çª—å£
 Gui, Show, x341 y145 h227 w420, Exif Renamer
 Return
 
 ; program exit
-; ÍË³ö³ÌĞò
+; é€€å‡ºç¨‹åº
 GuiClose:
 	ExitApp
 
 ; select folder for photos
-; Ñ¡ÔñÕÕÆ¬Ä¿Â¼
+; é€‰æ‹©ç…§ç‰‡ç›®å½•
 SelectFloder:
 	FileSelectFolder, PicFloder
 	if (PicFloder = "")
@@ -36,7 +36,7 @@ SelectFloder:
 	GuiControl, , CtrlEdit_PicFloder, %PicFloder%
 	return
 
-; ÉèÖÃÎÄ¼şÃûÇ°×º
+; è®¾ç½®æ–‡ä»¶åå‰ç¼€
 SettingPrefix:
 	if (Enable_Prefix)
 	{
@@ -50,14 +50,14 @@ SettingPrefix:
 	return
 	
 ; start renaming
-; Æô¶¯exifrename.py½Å±¾
+; å¯åŠ¨exifrename.pyè„šæœ¬
 DoRename:
 	if (Enable_Prefix)
 	{
 		GuiControlGet, Prefix, , CtrlEdit_Prefix
 		if (Prefix = "")
 		{
-			Msgbox, ÇëÊäÈëÇ°×º
+			Msgbox, è¯·è¾“å…¥å‰ç¼€
 			return
 		}
 		Argv_Prefix = --prefix=%Prefix%
@@ -66,7 +66,7 @@ DoRename:
 	GuiControlGet, PicFloder, , CtrlEdit_PicFloder
 	if (PicFloder = "")
 	{
-		MsgBox, ÇëÑ¡ÔñÄ¿Â¼
+		MsgBox, è¯·é€‰æ‹©ç›®å½•
 		return
 	}
 

@@ -1,9 +1,9 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 
 """
-一个简单的EXIF照片重命名工具
-格式：
-	exifrename.py -p preifx [path]
+一个简单的 EXIF 照片重命名工具
+使用：
+	exifrename.py -p prefix_string [path]
 	exifrename.py -h
 	exifrename.py [path]
 """

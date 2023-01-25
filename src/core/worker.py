@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 import os
 import shutil
 import EXIF
@@ -46,7 +46,7 @@ def worker(srcdir='.', prefix=""):
 		print("."),
 
 		dirname = os.path.dirname(file_path)
-		# 按月生成目录，格式201203
+		# 按月生成目录，格式 201203
 		new_dir = os.path.join(dirname, d[:6])
 		new_fullname = os.path.join(new_dir, new_name)
 
