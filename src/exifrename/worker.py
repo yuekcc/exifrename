@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import shutil
-import EXIF
+from ._vendor import piexif
 
 
 def parse(dir='.', prefix=""):
@@ -22,17 +22,15 @@ def parse(dir='.', prefix=""):
             continue
 
         file_path = os.path.join(dir, file_path)
-        f = open(file_path, 'rb')
 
         print("."),
 
-        exifdata = EXIF.process_file(f)
-        f.close()
+        exifdata = piexif.load(file_path)
 
         datetime_fields = [
-            'EXIF DateTimeDigitized',
-            'EXIF DateTimeOriginal',
-            'Image DateTime',
+            piexif.ExifIFD.DateTimeDigitized,
+            piexif.ExifIFD.DateTimeOriginal,
+            piexif.ImageIFD.DateTime
         ]
 
         dt = []
@@ -49,7 +47,8 @@ def parse(dir='.', prefix=""):
         if len(dt) >= 2:
             d = dt[0].replace(':', '')
             t = dt[1].replace(':', '')
-        
+
+        # FIXME 无 exif 时间日期时如何处理
         new_name = '{0}-{1}-{2}.jpg'.format(p, d, t)
 
         print("."),

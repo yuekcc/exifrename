@@ -8,6 +8,10 @@ Exif Renamer 是一个用于归档照片到不同的目录的小工具。
   - [EXIF.py](https://github.com/ianare/exif-py)
   - [AutoHotkey](http://www.autohotkey.net)
 
+## 开发
+
+exifrename 使用了本地依赖方式，开发时请先运行 `vendor_init.sh` 初始化依赖。
+
 ## 一点历史
 
 Exif Renamer 最初在 2013 年编写实现。也是我能找到的最早的代码。2013 年的版本可以在 master 分支找到，当前的分支为 python3 适配的版本。
