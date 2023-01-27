@@ -4,13 +4,23 @@ Exif Renamer 是一个用于归档照片到不同的目录的小工具。
 
 感谢：
 
-  - [Python](http://www.python.org)
-  - [EXIF.py](https://github.com/ianare/exif-py)
-  - [AutoHotkey](http://www.autohotkey.net)
+- [Python](http://www.python.org)
+- [EXIF.py](https://github.com/ianare/exif-py)
+- [AutoHotkey](http://www.autohotkey.net)
 
-## 开发
+## 构建
 
-exifrename 使用了本地依赖方式，开发时请先运行 `vendor_init.sh` 初始化依赖。
+构建需要使用 [just] 或手工执行 justfile 的脚本内容。
+
+构建需要 pip、rust 1.6+。
+
+执行：
+
+```sh
+just build
+```
+
+[just]: https://github.com/casey/just
 
 ## 一点历史
 
