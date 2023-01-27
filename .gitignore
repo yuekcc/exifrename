@@ -2,5 +2,7 @@
 .idea
 *.log
 
+dist
+
 __pycache__
 _vendor
