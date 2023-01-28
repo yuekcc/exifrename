@@ -1,39 +1,71 @@
-use std::env;
 use std::path::{Path, PathBuf};
-use std::process::Command;
+use std::process::{self, Command};
+use std::{env, vec};
 
-fn detect_python(install_dir: &Path) -> String {
+fn find_python(install_dir: &Path) -> String {
     #[cfg(target_os = "windows")]
-    let cmd_name = "python.exe";
+    let cmd_names = vec!["runtime/python.exe", "python.exe"];
 
     #[cfg(not(target_os = "windows"))]
-    let cmd_name = "python";
+    let cmd_names = vec!["runtime/python", "runtime/python3", "python", "python3"];
 
-    let local_python = install_dir.join("runtime").join(cmd_name);
-    if local_python.exists() {
-        local_python.to_str().unwrap().to_string()
+    cmd_names
+        .iter()
+        .find(|cmd_name: &&&str| install_dir.join(cmd_name).exists())
+        .unwrap_or(&"python")
+        .to_string()
+}
+
+fn start_pyapp(pyexec: &str, install_dir: &Path, cli_args: &[String], work_dir: &Path) {
+    let mut command_line = vec![
+        pyexec.to_string(),
+        install_dir.to_str().unwrap().to_string(),
+    ];
+    command_line.extend_from_slice(cli_args);
+
+    #[cfg(target_os = "windows")]
+    let exit_code = {
+        Command::new("cmd")
+            .arg("/C")
+            .arg(command_line.join(" "))
+            .current_dir(work_dir)
+            .spawn()
+            .expect("failed to launch python script")
+            .wait()
+            .expect("the app isn't running")
+    };
+
+    #[cfg(not(target_os = "windows"))]
+    let exit_code = {
+        Command::new("sh")
+            .arg("-c")
+            .arg(command_line.join(" "))
+            .current_dir(work_dir)
+            .spawn()
+            .expect("failed to launch python script")
+            .wait()
+            .expect("the app isn't running")
+    };
+
+    if exit_code.success() {
+        process::exit(0);
     } else {
-        "python".to_string()
+        process::exit(-1)
     }
 }
 
 fn main() {
     let work_dir = env::current_dir().unwrap();
 
-    let args: Vec<String> = env::args().collect();
+    let mut args = env::args();
+    let starter = args.next().unwrap();
+    let cli_args = args.collect::<Vec<String>>();
 
-    let exe = PathBuf::from(&args[0]);
-    let install_dir = exe.parent().unwrap();
+    let starter_path = PathBuf::from(&starter);
+    let install_dir = starter_path.parent().unwrap();
 
-    let cli_args = &args[1..];
-
-    let python_cmd = detect_python(install_dir);
+    let python_cmd = find_python(install_dir);
     println!("using python: {}", &python_cmd);
 
-    Command::new(python_cmd)
-        .current_dir(work_dir)
-        .arg(install_dir)
-        .args(cli_args)
-        .spawn()
-        .expect("failed to launch");
+    start_pyapp(&python_cmd, install_dir, &cli_args, &work_dir);
 }

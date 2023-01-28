@@ -1,3 +1,5 @@
+default: build
+
 # 安装依赖
 install-vendor:
     cd src/exifrename && pip install -r requirements.txt -t _vendor
