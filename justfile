@@ -22,3 +22,9 @@ build: install-vendor build-loader
     python -m compileall dist/exifrename/
 
     cp bin/target/release/exifrename.exe dist/exifrename/exifrename.exe
+
+# 只构建 loader
+install-loader: build-loader
+    #!/bin/sh
+    mkdir -p dist/exifrename
+    cp bin/target/release/exifrename.exe dist/exifrename/exifrename.exe

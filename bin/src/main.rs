@@ -1,5 +1,6 @@
+use std::os::windows::process::CommandExt;
 use std::path::{Path, PathBuf};
-use std::process::{self, Command};
+use std::process::Command;
 use std::{env, vec};
 
 fn find_python(install_dir: &Path) -> String {
@@ -16,42 +17,30 @@ fn find_python(install_dir: &Path) -> String {
         .to_string()
 }
 
-fn start_pyapp(pyexec: &str, install_dir: &Path, cli_args: &[String], work_dir: &Path) {
-    let mut command_line = vec![
-        pyexec.to_string(),
-        install_dir.to_str().unwrap().to_string(),
-    ];
-    command_line.extend_from_slice(cli_args);
+const CREATE_UNICODE_ENVIRONMENT: u32 = 0x00000400;
+const CREATE_NEW_PROCESS_GROUP: u32 = 0x00000200;
 
+fn start_pyapp(pyexec: &str, install_dir: &Path, cli_args: &[String], work_dir: &Path) {
     #[cfg(target_os = "windows")]
-    let exit_code = {
-        Command::new("cmd")
-            .arg("/C")
-            .arg(command_line.join(" "))
+    {
+        Command::new(pyexec)
+            .creation_flags(CREATE_NEW_PROCESS_GROUP | CREATE_UNICODE_ENVIRONMENT) // windows 平台专用
+            .arg(install_dir)
+            .args(cli_args)
             .current_dir(work_dir)
             .spawn()
-            .expect("failed to launch python script")
-            .wait()
-            .expect("the app isn't running")
+            .expect("failed to launch python script");
     };
 
     #[cfg(not(target_os = "windows"))]
-    let exit_code = {
-        Command::new("sh")
-            .arg("-c")
-            .arg(command_line.join(" "))
+    {
+        Command::new(pyexec)
+            .arg(install_dir)
+            .args(cli_args)
             .current_dir(work_dir)
             .spawn()
-            .expect("failed to launch python script")
-            .wait()
-            .expect("the app isn't running")
+            .expect("failed to launch python script");
     };
-
-    if exit_code.success() {
-        process::exit(0);
-    } else {
-        process::exit(-1)
-    }
 }
 
 fn main() {
