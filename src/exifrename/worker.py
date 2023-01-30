@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 import os
 import shutil
-from ._vendor import piexif
+import pathlib
+from datetime import datetime
+import time
+
+from _vendor import piexif
 
 
 def parse(dir='.', prefix=""):
-    print("PROCESSING FLODER: {0}".format(dir))
+    print("PROCESSING FOLDER: {0}".format(dir))
 
     file_list = os.listdir(dir)
 
@@ -25,24 +29,29 @@ def parse(dir='.', prefix=""):
 
         print("."),
 
-        exifdata = piexif.load(file_path)
-
-        datetime_fields = [
+        exif_data = piexif.load(file_path)
+        tags = [
             piexif.ExifIFD.DateTimeDigitized,
             piexif.ExifIFD.DateTimeOriginal,
             piexif.ImageIFD.DateTime
         ]
 
         dt = []
-        for tag in datetime_fields:
-            if tag in exifdata:
-                dt = str(exifdata[tag]).split()
+        for tag in tags:
+            if tag in exif_data:
+                print(f"{tag} => {exif_data[tag]}")
+                dt = str(exif_data[tag]).split()
                 break
+
+        if len(dt) == 0:
+            file_state = pathlib.Path(file_path).stat()
+            created_dt = datetime.fromtimestamp(file_state.st_ctime)
+            dt = created_dt.strftime("%Y%m%d %H%M%S").split()
 
         if prefix:
             p = prefix
         else:
-            p = str(exifdata['Image Model'])
+            p = str(exif_data['Image Model'])
 
         if len(dt) >= 2:
             d = dt[0].replace(':', '')

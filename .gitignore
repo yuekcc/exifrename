@@ -3,6 +3,7 @@
 *.log
 
 dist
+testdata
 
 __pycache__
 _vendor

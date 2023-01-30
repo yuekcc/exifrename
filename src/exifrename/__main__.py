@@ -1,13 +1,4 @@
 # -*- coding: utf-8 -*-
-
-"""
-一个简单的 EXIF 照片重命名工具
-使用：
-	exifrename.py -p prefix_string [path]
-	exifrename.py -h
-	exifrename.py [path]
-"""
-
 import sys
 import os
 import getopt
@@ -49,14 +40,15 @@ def parse_cli() -> tuple[str, str]:
     return (dir, prefix)
 
 
-def start_exifrename():
+if __name__ == '__main__':
+    import sys
+    import pathlib
+    vendor_dir = pathlib.Path(__file__).parent.joinpath('_vendor')
+    sys.path.append(vendor_dir.as_posix())
+
     # 处理命令行
     dir, prefix = parse_cli()
 
     # 主流程
-    from .worker import parse
+    from worker import parse
     parse(dir, prefix)
-
-
-if __name__ == '__main__':
-    start_exifrename()
