@@ -2,15 +2,9 @@
 
 Exif Renamer 是一个用于归档照片到不同的目录的小工具。
 
-感谢：
-
-- [Python](http://www.python.org)
-- [EXIF.py](https://github.com/ianare/exif-py)
-- [AutoHotkey](http://www.autohotkey.net)
-
 ## 构建
 
-构建需要使用 [just] 或手工执行 justfile 的脚本内容。
+构建需要使用 [just] 或手工执行 justfile 菜单。
 
 构建需要 pip、rust 1.6+。
 
@@ -33,4 +27,5 @@ Exif Renamer 后续演进为 [picar]，使用 golang 重新开发。也做了一
 
 ## LICENSE
 
-这个项目按照 [MIT License](LICENSE) 发布。
+[MIT](LICENSE)
+
