@@ -19,7 +19,7 @@ install-app:
     #!/bin/sh
     mkdir -p dist/exifrename
     cp -r src/exifrename/* dist/exifrename/
-    python -m compileall dist/exifrename/
+    # python -m compileall dist/exifrename/
 
 # 构建 loader
 _build-loader:
